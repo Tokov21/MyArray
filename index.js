@@ -1,52 +1,184 @@
-const currentDate = new Date().getFullYear();
-
-class University {
-    constructor(name, city, yearOfFoundation, faculties) {
-        this.name = name;
-        this.city = city;
-        this.yearOfFoundation = yearOfFoundation;
-        this.faculties = faculties;
-
-        this.students = [];
+/*
+! 1
+*/
+function sayType(data) {
+    if (isNaN(data)) {
+        return "Не знаю";
     }
 
-    addFaculty(facName) {
-        this.faculties.push(facName);
-        return true;
-    }
+    switch (typeof data) {
+        case "number":
+            return "Это число";
+        case "string":
+            return "Это строка";
 
-    registerStudent(studentInstance, facName) {
-        if (!this.faculties.includes(facName)) {
-            throw new Error("Missing faculty");
+        default:
+            return "Не знаю";
+    }
+}
+
+/*
+! 2
+*/
+function randNum() {
+    return Math.round(Math.random() * 100);
+}
+
+/*
+! 3 - 4
+*/
+function getAlmostSquareStars() {
+    let variable = "";
+
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            variable += "*";
         }
 
-        studentInstance.yearOfRegistry = currentDate;
-        studentInstance.universityName = this.name;
-        studentInstance.facultyName = facName;
-
-        this.students.push({ student: studentInstance, faculty: facName });
-
-        return true;
+        variable += "\n";
     }
+
+    return console.log(variable);
 }
 
-class Student {
-    constructor(name, age) {
-        this.name = name;
-        this.age = age;
-    }
+/*
+! 5
+*/
+const arr = [];
 
-    isGraduated() {
-        return currentDate - this.yearOfRegistry >= 5;
-    }
+for (let index = 0; index < 10; index++) {
+    arr.push(index + 1);
 }
 
-const zntu = new University("ZNTU", "Zaporozhye", 1933, [
-    "Bio",
-    "Math",
-    "Phys",
-]);
-console.log(zntu);
+for (let i = 0; i < 10; i += 2) {
+    delete arr[i];
+}
 
-const stud1 = new Student("Homyakov Tolya", 18);
-console.log(stud1);
+/*
+! 6
+*/
+const arr1 = [];
+
+for (let index = 0; index < 5; index++) {
+    arr1.push(index + 1);
+}
+
+/*
+ * first solution
+ */
+// for (let index = 10; index > 5; index--) {
+//     arr1.splice(5, 0, index);
+// }
+
+/*
+ * second solution
+ */
+for (let i = 0; i < 5; i++) {
+    arr1[i + 5] = i + 6;
+}
+
+/*
+! 7
+*/
+const arr2 = [];
+
+for (let i = 0; i < 5; i++) {
+    arr2[i] = `user${i + 1}`;
+}
+
+const arr2Length = arr2.length;
+
+/*
+ * first solution
+ */
+// for (let i = 0; i < arr2Length; i++) {
+//     if (arr2[i].endsWith(2) || arr2[i].endsWith(3) || arr2[i].endsWith(4)) {
+//         delete arr2[i];
+//     }
+// }
+
+/*
+ * second solution
+ */
+// for (let i = 0; i < arr2Length; i++) {
+//     if (
+//         arr2[i].lastIndexOf(2) !== -1 ||
+//         arr2[i].lastIndexOf(3) !== -1 ||
+//         arr2[i].lastIndexOf(4) !== -1
+//     ) {
+//         delete arr2[i];
+//     }
+// }
+
+/*
+ * third solution
+ */
+arr2.forEach((value, index) => {
+    if (value.endsWith(2)) {
+        arr2.splice(index, 3);
+    }
+});
+
+/*
+! 8
+*/
+arr2.forEach((value) => {
+    arr1.push(value);
+});
+
+/*
+! 9
+*/
+const str = arr1.join(" или ");
+
+/*
+! 10
+*/
+const arr3 = [];
+
+for (let i = 0; i < 6; i++) {
+    arr3.push((i + 2) * (i + 2));
+}
+
+const arr4 = arr3.map((value) => {
+    return Math.sqrt(value);
+});
+
+/*
+! 11
+*/
+const arr5 = [];
+
+for (let i = 0; i < 30; i++) {
+    arr5.push(Math.round(Math.random() * 30));
+}
+
+function findIndexLessTwentyMoreTen() {
+    return arr5.findIndex((value) => {
+        return value > 10 && value < 20;
+    });
+}
+
+/*
+! 12
+*/
+function makeid(length) {
+    var result = "";
+    var characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(
+            Math.floor(Math.random() * charactersLength)
+        );
+    }
+    return result;
+}
+
+const arr6 = [];
+
+for (let i = 0; i < 30; i++) {
+    arr6[i] = makeid(10);
+}
+
+const arr7 = arr6.filter((value) => value.includes("o") && value.includes("p"));
