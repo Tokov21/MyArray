@@ -1,46 +1,24 @@
-/*
- ! 1 
- */
-class Cat {
-    constructor(mustache, paws, tail, fur) {
-        this.mustache = mustache;
-        this.paws = paws;
-        this.tail = tail;
-        this.fur = fur;
+class Person {
+    constructor(firstname) {
+        this.firstname = firstname;
+        this.indicator = 0;
     }
 
-    sayPurr() {
-        return `Mrrrr`;
+    get firstname() {
+        return this._firstname;
     }
 
-    sayMeow() {
-        return `Meow`;
-    }
-}
-
-class Lion extends Cat {
-    constructor(mustache, paws, tail, fur, ruff) {
-        super(mustache, paws, tail, fur);
-
-        this.ruff = ruff;
-    }
-
-    sayMeow() {
-        return `Rrrrr`;
-    }
-}
-
-class Password {
-    constructor(pass) {
-        this.pass = pass;
-    }
-
-    get showPassword() {
-        if (this.passIsShown === undefined) {
-            this.passIsShown = true;
-            return this.pass;
+    set firstname(newValue) {
+        if (typeof newValue !== "string") {
+            throw new Error("newValue must be string");
         }
 
-        return null;
+        if (this.indicator >= 3) {
+            throw new Error("You can change name only 3 times");
+        }
+
+        this._firstname = newValue;
+
+        this.indicator++;
     }
 }
