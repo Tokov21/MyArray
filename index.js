@@ -1,24 +1,27 @@
-class Person {
-    constructor(firstname) {
-        this.firstname = firstname;
-        this.indicator = 0;
+class Queue {
+    constructor() {
+        this.queue = {};
+
+        this.head = 0;
+        this.tail = 0;
+
+        for (let i = 0; i < arguments.length; i++) {
+            this.enqueue(arguments[i]);
+        }
     }
 
-    get firstname() {
-        return this._firstname;
+    enqueue(element) {
+        this.queue[this.tail++] = element;
     }
 
-    set firstname(newValue) {
-        if (typeof newValue !== "string") {
-            throw new Error("newValue must be string");
-        }
+    dequeue() {
+        if (this.tail === this.head) return undefined;
 
-        if (this.indicator >= 3) {
-            throw new Error("You can change name only 3 times");
-        }
-
-        this._firstname = newValue;
-
-        this.indicator++;
+        const element = this.queue[this.head];
+        delete this.queue[this.head++];
+        // this.tail--;
+        return element;
     }
 }
+
+const queue1 = new Queue("ass1", 2, 3);
