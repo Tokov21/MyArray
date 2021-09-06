@@ -223,8 +223,6 @@ class MyArray {
             }
 
             Object.assign(this, newArr);
-
-            console.log("deleteCount > 0 && start <= deleteCount");
         }
 
         if (start > deleteCount && deleteCount > 0) {
@@ -261,8 +259,6 @@ class MyArray {
             });
 
             Object.assign(this, newArr);
-
-            console.log("start > deleteCount && deleteCount > 0");
         }
 
         if (deleteCount === undefined) {
@@ -290,8 +286,6 @@ class MyArray {
             });
 
             Object.assign(this, newArr);
-
-            console.log("deleteCount === undefined");
         }
 
         if (Number(deleteCount) === 0 || deleteCount < 0) {
@@ -314,8 +308,6 @@ class MyArray {
             });
 
             Object.assign(this, newArr);
-
-            console.log("Number(deleteCount) === 0");
         }
 
         return newArray;
@@ -324,11 +316,4 @@ class MyArray {
 
 const arr = new MyArray(1, "test23", 3, "dad");
 
-console.log(arr);
-
 const arr1 = new Array(1, "test23", 3, "dad");
-
-console.log(arr1);
-
-arr1.push();
-arr1.splice();
