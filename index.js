@@ -162,18 +162,43 @@ class MyArray {
 
         if (deleteCount > 0 && start <= deleteCount) {
             //Add deleted elements to newArray
-            for (let i = 0; i < deleteCount; i++) {
-                if (this[start + i] !== undefined) {
-                    newArray.push(this[start + i]);
-                    delete this[start + i];
+            if (start >= 0) {
+                for (let i = 0; i < deleteCount; i++) {
+                    if (this[start + i] !== undefined) {
+                        newArray.push(this[start + i]);
+                        delete this[start + i];
+                    }
                 }
             }
 
+            if (start < 0) {
+                start += this.length;
+
+                if (start <= 0) {
+                    for (let i = 0; i < this.length; i++) {
+                        if (this[i] !== undefined) {
+                            newArray.push(this[i]);
+                            delete this[i];
+                        }
+                    }
+                }
+
+                if (start > 0) {
+                    for (let i = 0; i < deleteCount; i++) {
+                        if (this[start + i] !== undefined) {
+                            newArray.push(this[start + i]);
+                            delete this[start + i];
+                        }
+                    }
+                }
+            }
+
+            //Add new elements
             if (items.length > 0) {
                 // Перенести значения ячеек на items вправо
-                for (let i = this.length - 1; i >= start; i--) {
+                for (let i = this.length - 1; i >= deleteCount; i--) {
                     if (this[i] !== undefined) {
-                        this[i + deleteCount] = this[i];
+                        this[i + items.length - deleteCount] = this[i];
                     }
                 }
 
@@ -196,37 +221,37 @@ class MyArray {
             for (let i = items.length; i < this.length; i++) {
                 delete this[i];
             }
-            // if (this[this.length - 1] !== undefined) {
-            //     delete this[this.length - 1];
-            // }
 
             Object.assign(this, newArr);
 
             console.log("deleteCount > 0 && start <= deleteCount");
         }
 
-        if (deleteCount > 0 && start > deleteCount) {
+        if (start > deleteCount && deleteCount > 0) {
             //Add deleted elements to newArray
             for (let i = 0; i < deleteCount; i++) {
-                newArray.push(this[start + i]);
-                delete this[start + i];
-            }
-            console.log("2 - second");
-
-            //Перенести значения ячеек на items вправо
-            for (let i = this.length - 1; i >= start; i--) {
-                if (this[i] !== undefined) {
-                    this[i + deleteCount + start] = this[i];
+                if (this[start + i] !== undefined) {
+                    newArray.push(this[start + i]);
+                    delete this[start + i];
                 }
             }
 
-            //Присвоить ячейкам значения переданные в items
-            for (let i = 0; i < items.length; i++) {
-                this[start + i] = items[i];
+            if (items.length > 0) {
+                // Перенести значения ячеек на items вправо
+                for (let i = this.length - 1; i >= deleteCount; i--) {
+                    if (this[i] !== undefined) {
+                        this[i + items.length - deleteCount] = this[i];
+                    }
+                }
+
+                // Присвоить ячейкам значения переданные в items
+                for (let i = 0; i < items.length; i++) {
+                    this[start + i] = items[i];
+                }
             }
 
             //Поменять длину нового массива
-            this.length = this.length + items.length - deleteCount;
+            this.length += items.length;
 
             //Избавиться от empty ячеек
             const newArr = new MyArray();
@@ -237,7 +262,7 @@ class MyArray {
 
             Object.assign(this, newArr);
 
-            console.log("deleteCount > 0 && start > deleteCount");
+            console.log("start > deleteCount && deleteCount > 0");
         }
 
         if (deleteCount === undefined) {
@@ -269,7 +294,7 @@ class MyArray {
             console.log("deleteCount === undefined");
         }
 
-        if (Number(deleteCount) === 0) {
+        if (Number(deleteCount) === 0 || deleteCount < 0) {
             for (let i = this.length - 1; i >= start; i--) {
                 if (this[i] !== undefined) {
                     this[i + items.length] = this[i];
