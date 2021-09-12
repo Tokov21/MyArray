@@ -312,8 +312,68 @@ class MyArray {
 
         return newArray;
     }
+
+    indexOf(searchElement, fromIndex) {
+        if (fromIndex === undefined) {
+            for (let i = 0; i < this.length; i++) {
+                if (searchElement === this[i]) {
+                    return i;
+                }
+            }
+        }
+
+        if (fromIndex >= 0) {
+            for (let i = fromIndex; i < this.length; i++) {
+                if (searchElement === this[i]) {
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    find(callbackfn, thisArg) {
+        if (typeof callbackfn !== "function") {
+            throw new TypeError(callbackfn + " is not a function");
+        }
+
+        const newArray = new MyArray();
+
+        for (let i = 0; i < this.length; i++) {
+            if (this[i] !== undefined) {
+                const result = callbackfn(this[i], i, this);
+
+                if (result) {
+                    return this[i];
+                }
+            }
+        }
+        return undefined;
+    }
+
+    findIndex(callbackfn, thisArg) {
+        if (typeof callbackfn !== "function") {
+            throw new TypeError(callbackfn + " is not a function");
+        }
+
+        const newArray = new MyArray();
+
+        for (let i = 0; i < this.length; i++) {
+            if (this[i] !== undefined) {
+                const result = callbackfn(this[i], i, this);
+
+                if (result) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
 }
 
 const arr = new MyArray(1, "test23", 3, "dad");
+console.log(arr);
 
 const arr1 = new Array(1, "test23", 3, "dad");
+console.log(arr1);
