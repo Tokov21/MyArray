@@ -338,8 +338,6 @@ class MyArray {
             throw new TypeError(callbackfn + " is not a function");
         }
 
-        const newArray = new MyArray();
-
         for (let i = 0; i < this.length; i++) {
             if (this[i] !== undefined) {
                 const result = callbackfn(this[i], i, this);
@@ -357,8 +355,6 @@ class MyArray {
             throw new TypeError(callbackfn + " is not a function");
         }
 
-        const newArray = new MyArray();
-
         for (let i = 0; i < this.length; i++) {
             if (this[i] !== undefined) {
                 const result = callbackfn(this[i], i, this);
@@ -370,10 +366,53 @@ class MyArray {
         }
         return -1;
     }
+
+    filter(callbackfn, thisArg) {
+        if (typeof callbackfn !== "function") {
+            throw new TypeError(callbackfn + " is not a function");
+        }
+
+        const newArray = new MyArray();
+
+        for (let i = 0; i < this.length; i++) {
+            if (this[i] !== undefined) {
+                const result = callbackfn(this[i], i, this);
+
+                if (result) {
+                    newArray.push(this[i]);
+                }
+            }
+        }
+        return newArray;
+    }
+
+    sort(compareFn) {
+        let temp;
+
+        for (let i = 0; i < this.length; i++) {
+            for (let j = 0; j < this.length; j++) {
+                if (this[i] > this[j + 1]) {
+                    temp = this[i];
+                    this[i] = this[j + 1];
+                    this[j + 1] = temp;
+                }
+            }
+        }
+
+        return this;
+    }
 }
 
-const arr = new MyArray(1, "test23", 3, "dad");
+const arr = new MyArray(3, 1, 2, 5, "test23", "ad", "asd", 3, 2, 5, "dad");
 console.log(arr);
 
-const arr1 = new Array(1, "test23", 3, "dad");
+const arr1 = new Array(3, 1, 2, 5, "test23", "ad", "asd", 3, 2, 5, "dad");
 console.log(arr1);
+
+console.log(
+    arr1.sort((v, i) => {
+        return v + i;
+    })
+);
+
+console.log(arr.sort());
