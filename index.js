@@ -387,32 +387,117 @@ class MyArray {
     }
 
     sort(compareFn) {
-        let temp;
+        //Separate strings from numbers
+        const str = this.map((v) => {
+            if (typeof v === "string") {
+                return v;
+            }
+        });
 
-        for (let i = 0; i < this.length; i++) {
-            for (let j = 0; j < this.length; j++) {
-                if (this[i] > this[j + 1]) {
-                    temp = this[i];
-                    this[i] = this[j + 1];
-                    this[j + 1] = temp;
+        const strNoEmpty = new MyArray();
+
+        str.forEach((v) => {
+            if (v !== undefined) {
+                strNoEmpty.push(v);
+            }
+        });
+
+        //Sort strings
+        let temp = "";
+
+        for (let i = 0; i < strNoEmpty.length; i++) {
+            for (let j = 0; j < strNoEmpty.length - 1; j++) {
+                if (strNoEmpty[j] > strNoEmpty[j + 1]) {
+                    temp = strNoEmpty[j];
+                    strNoEmpty[j] = strNoEmpty[j + 1];
+                    strNoEmpty[j + 1] = temp;
                 }
             }
         }
+
+        //Separate numbers from strings
+        const num = this.map((v) => {
+            if (typeof v === "number") {
+                return v;
+            }
+        });
+
+        const numNoEmpty = new MyArray();
+
+        num.forEach((v) => {
+            if (v !== undefined) {
+                numNoEmpty.push(v);
+            }
+        });
+
+        temp = 0;
+
+        //Sort numbers
+        for (let i = 0; i < numNoEmpty.length; i++) {
+            for (let j = 0; j < numNoEmpty.length - 1; j++) {
+                if (numNoEmpty[j] > numNoEmpty[j + 1]) {
+                    temp = numNoEmpty[j];
+                    numNoEmpty[j] = numNoEmpty[j + 1];
+                    numNoEmpty[j + 1] = temp;
+                }
+            }
+        }
+        // console.log(numNoEmpty);
+
+        //Concat numbers and strings
+        let arrNumAndStr = new MyArray();
+
+        numNoEmpty.forEach((v) => arrNumAndStr.push(v));
+        strNoEmpty.forEach((v) => arrNumAndStr.push(v));
+
+        // console.log(ar123);
+
+        //Reset "this" array
+        for (let i = 0; i < this.length; i++) {
+            delete this[i + 1];
+        }
+
+        //Assign arrNumAndStr values to "this"
+        Object.assign(this, arrNumAndStr);
 
         return this;
     }
 }
 
-const arr = new MyArray(3, 1, 2, 5, "test23", "ad", "asd", 3, 2, 5, "dad");
+const arr = new MyArray(
+    3,
+    "abetka",
+    1,
+    2,
+    5,
+    "mom",
+    "dad1",
+    523,
+    3,
+    2,
+    5,
+    "god",
+    "aabetka"
+);
 console.log(arr);
 
-const arr1 = new Array(3, 1, 2, 5, "test23", "ad", "asd", 3, 2, 5, "dad");
+const arr1 = new Array(
+    3,
+    "abetka",
+    1,
+    2,
+    5,
+    "mom",
+    "dad1",
+    523,
+    3,
+    2,
+    5,
+    "god",
+    "aabetka"
+);
 console.log(arr1);
 
-console.log(
-    arr1.sort((v, i) => {
-        return v + i;
-    })
-);
+console.log(arr1.sort());
 
 console.log(arr.sort());
