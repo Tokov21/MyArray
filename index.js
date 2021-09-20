@@ -387,78 +387,114 @@ class MyArray {
     }
 
     sort(compareFn) {
-        //Separate strings from numbers
-        const str = this.map((v) => {
-            if (typeof v === "string") {
-                return v;
+        if (compareFn === undefined) {
+            //Separate strings from numbers
+            //Numbers -> Strings
+            const str = this.map((v, i) => {
+                // if (typeof v === "string") {
+                //     return v;
+                // }
+                return (this[i] = String(v));
+            });
+            // const str = new MyArray();
+
+            // str.forEach((v) => {
+            //     if (v !== undefined) {
+            //         strNoEmpty.push(v);
+            //     }
+            // });
+
+            //Sort strings
+            let temp = "";
+
+            for (let i = 0; i < str.length; i++) {
+                for (let j = 0; j < str.length - 1; j++) {
+                    if (str[j] > str[j + 1]) {
+                        temp = str[j];
+                        str[j] = str[j + 1];
+                        str[j + 1] = temp;
+                    }
+                }
             }
-        });
 
-        const strNoEmpty = new MyArray();
-
-        str.forEach((v) => {
-            if (v !== undefined) {
-                strNoEmpty.push(v);
+            //String numbers to Number
+            for (let i = 0; i < str.length; i++) {
+                if (!isNaN(str[i])) {
+                    str[i] = Number(str[i]);
+                }
             }
-        });
+        }
 
-        //Sort strings
-        let temp = "";
+        //comparefn
+        // function compareFn() {};
+        if (compareFn) {
+            if (typeof compareFn !== "function") {
+                throw new TypeError(
+                    "The comparison function must be either a function or undefined"
+                );
+            }
 
-        for (let i = 0; i < strNoEmpty.length; i++) {
-            for (let j = 0; j < strNoEmpty.length - 1; j++) {
-                if (strNoEmpty[j] > strNoEmpty[j + 1]) {
-                    temp = strNoEmpty[j];
-                    strNoEmpty[j] = strNoEmpty[j + 1];
-                    strNoEmpty[j + 1] = temp;
+            for (let i = 0; i < this.length; i++) {
+                const result = compareFn(this[i], this[i + 1]);
+
+                if (result > 0) {
+                    const temp = this[i];
+                    this[i] = this[i + 1];
+                    this[i + 1] = temp;
+                }
+
+                if (result < 0) {
+                    const temp = this[i + 1];
+                    this[i + 1] = this[i];
+                    this[i] = temp;
                 }
             }
         }
 
         //Separate numbers from strings
-        const num = this.map((v) => {
-            if (typeof v === "number") {
-                return v;
-            }
-        });
+        // const num = this.map((v) => {
+        //     if (typeof v === "number") {
+        //         return v;
+        //     }
+        // });
 
-        const numNoEmpty = new MyArray();
+        // const numNoEmpty = new MyArray();
 
-        num.forEach((v) => {
-            if (v !== undefined) {
-                numNoEmpty.push(v);
-            }
-        });
+        // num.forEach((v) => {
+        //     if (v !== undefined) {
+        //         numNoEmpty.push(v);
+        //     }
+        // });
 
-        temp = 0;
+        // temp = 0;
 
-        //Sort numbers
-        for (let i = 0; i < numNoEmpty.length; i++) {
-            for (let j = 0; j < numNoEmpty.length - 1; j++) {
-                if (numNoEmpty[j] > numNoEmpty[j + 1]) {
-                    temp = numNoEmpty[j];
-                    numNoEmpty[j] = numNoEmpty[j + 1];
-                    numNoEmpty[j + 1] = temp;
-                }
-            }
-        }
+        // //Sort numbers
+        // for (let i = 0; i < numNoEmpty.length; i++) {
+        //     for (let j = 0; j < numNoEmpty.length - 1; j++) {
+        //         if (numNoEmpty[j] > numNoEmpty[j + 1]) {
+        //             temp = numNoEmpty[j];
+        //             numNoEmpty[j] = numNoEmpty[j + 1];
+        //             numNoEmpty[j + 1] = temp;
+        //         }
+        //     }
+        // }
         // console.log(numNoEmpty);
 
         //Concat numbers and strings
-        let arrNumAndStr = new MyArray();
+        // let arrNumAndStr = new MyArray();
 
-        numNoEmpty.forEach((v) => arrNumAndStr.push(v));
-        strNoEmpty.forEach((v) => arrNumAndStr.push(v));
+        // numNoEmpty.forEach((v) => arrNumAndStr.push(v));
+        // str.forEach((v) => arrNumAndStr.push(v));
 
         // console.log(ar123);
 
         //Reset "this" array
-        for (let i = 0; i < this.length; i++) {
-            delete this[i + 1];
-        }
+        // for (let i = 0; i < this.length; i++) {
+        //     delete this[i + 1];
+        // }
 
         //Assign arrNumAndStr values to "this"
-        Object.assign(this, arrNumAndStr);
+        // Object.assign(this, str);
 
         return this;
     }
@@ -475,6 +511,7 @@ const arr = new MyArray(
     523,
     3,
     2,
+    25,
     5,
     "god",
     "aabetka"
@@ -492,12 +529,21 @@ const arr1 = new Array(
     523,
     3,
     2,
+    25,
     5,
     "god",
     "aabetka"
 );
 console.log(arr1);
 
-console.log(arr1.sort());
+console.log(
+    arr1.sort((a, b) => {
+        return a - b;
+    })
+);
 
-console.log(arr.sort());
+console.log(
+    arr.sort((a, b) => {
+        return a - b;
+    })
+);
